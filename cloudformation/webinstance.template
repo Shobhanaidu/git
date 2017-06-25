@@ -86,7 +86,6 @@ Resources:
           Value: !Ref ServerName
         - Key: LaunchUserEmail
           Value: !Ref LaunchUserEmail
-        - Key: Role
 Outputs:
   DBInstanceIpAddress:
     Description: IP of test EC2 Instance
