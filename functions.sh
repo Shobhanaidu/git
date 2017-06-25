@@ -108,7 +108,7 @@ checkCFStatusTimeout=1200
 
 check4template webnstance && validateCloudFormation webinstance
 
-if check4template web; then
+if check4template webinstance; then
     runCloudFormation webinstance
 fi
 
