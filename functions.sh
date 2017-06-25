@@ -32,7 +32,7 @@ runCloudFormation() {
     cfName="$1"
     cfTemplate="${WORKSPACE}/cloudformation/${cfName}.template"
 
-    cfStackName="${PRODUCT_ID}-${cfName}"
+    cfStackName="${cfName}"
 
     if [ $(aws --region=us-east-2 cloudformation describe-stacks --stack-name "${cfStackName}" > /dev/null 2>&1 ; echo "$?") -ne 0 ]; then
         action="create-stack"
