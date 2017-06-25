@@ -67,7 +67,7 @@ Parameters:
     Type: String
     Default: dev
 Resources:
-  DBEc2Instance:
+  RaviEc2Instance:
     Type: 'AWS::EC2::Instance'
 
     Properties:
@@ -87,6 +87,6 @@ Resources:
         - Key: LaunchUserEmail
           Value: !Ref LaunchUserEmail
 Outputs:
-  DBInstanceIpAddress:
+  RaviInstanceIpAddress:
     Description: IP of test EC2 Instance
     Value: !Sub '${DBEc2Instance.PrivateIp}'
