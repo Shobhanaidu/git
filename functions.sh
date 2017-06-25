@@ -5,14 +5,14 @@ set -x
 
 check4template() {
     templateName="$1"
-    cfTemplate="${WORKSPACE}/${SUB_COMPONENT}/cloudFormation/${templateName}.template"
+    cfTemplate="${WORKSPACE}/${SUB_COMPONENT}/cloudformation/${templateName}.template"
     [[ -e "${cfTemplate}" ]]
 }
 
 ## validates the cloud formation template after checking for files
 validateCloudFormation(){
     templateName="$1"
-    cfTemplate="${WORKSPACE}/${SUB_COMPONENT}/cloudFormation/${templateName}.template"
+    cfTemplate="${WORKSPACE}/${SUB_COMPONENT}/cloudformation/${templateName}.template"
 
     ## Check to see if the CloudFormation template files exist in the CloudFormation directory and run the validate-stack command
     echo "[INFO] Validating CloudFormation template file \"${cfTemplate}\"."
@@ -30,7 +30,7 @@ validateCloudFormation(){
 ## This function will deploy CloudFormation stacks
 runCloudFormation() {
     cfName="$1"
-    cfTemplate="${WORKSPACE}/${SUB_COMPONENT}/cloudFormation/${cfName}.template"
+    cfTemplate="${WORKSPACE}/${SUB_COMPONENT}/cloudformation/${cfName}.template"
 
     cfStackName="${PRODUCT_ID}-${cfName}"
 
@@ -106,9 +106,10 @@ checkCFStatus(){
 DATE=$(date +%Y%m%d%H%M)
 checkCFStatusTimeout=1200
 SUB_COMPONENT=web
-validateCloudFormation webinstance
-
+check4template webinstance && validateCloudFormation webinstance
+if check4template webinstance; then
 runCloudFormation webinstance
+fi
 
 
 
