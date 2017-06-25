@@ -105,7 +105,7 @@ checkCFStatus(){
 ##set variables
 DATE=$(date +%Y%m%d%H%M)
 checkCFStatusTimeout=1200
-
+SUB_COMPONENT=web
 validateCloudFormation webinstance
 
 runCloudFormation webinstance
