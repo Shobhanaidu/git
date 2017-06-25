@@ -105,6 +105,7 @@ checkCFStatus(){
 ##set variables
 DATE=$(date +%Y%m%d%H%M)
 checkCFStatusTimeout=1200
+export PATH=~/.local/bin:$PATH
 check4template webinstance && validateCloudFormation webinstance
 if check4template webinstance; then
 runCloudFormation webinstance
