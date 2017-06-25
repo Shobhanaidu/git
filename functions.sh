@@ -99,8 +99,9 @@ checkCFStatus(){
     exit 1
 }
 
-
+###########
 ## MAIN ##
+##########
 
 ##set variables
 DATE=$(date +%Y%m%d%H%M)
