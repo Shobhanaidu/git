@@ -106,10 +106,8 @@ checkCFStatus(){
 DATE=$(date +%Y%m%d%H%M)
 checkCFStatusTimeout=1200
 SUB_COMPONENT=web
-check4template webinstance && validateCloudFormation webinstance
-if check4template webinstance; then
+validateCloudFormation webinstance
 runCloudFormation webinstance
-fi
 
 
 
