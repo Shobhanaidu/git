@@ -17,7 +17,7 @@ validateCloudFormation(){
     ## Check to see if the CloudFormation template files exist in the CloudFormation directory and run the validate-stack command
     echo "[INFO] Validating CloudFormation template file \"${cfTemplate}\"."
     if [ $(ls "${cfTemplate}" > /dev/null 2>&1; echo $?) -eq 0 ]; then
-        if [ $(aws cloudformation validate-template --template-body file://${cfTemplate} > /dev/null 2>&1; echo $?) -ne 0 ]; then
+        if [ $(aws --region=us-east-2 cloudformation validate-template --template-body file://${cfTemplate} > /dev/null 2>&1; echo $?) -ne 0 ]; then
             echo "[ERRO] Validation failure on CloudFormation template \"${cfTemplate}\"."
             exit 1
         fi
@@ -34,7 +34,7 @@ runCloudFormation() {
 
     cfStackName="${PRODUCT_ID}-${cfName}"
 
-    if [ $(aws cloudformation describe-stacks --stack-name "${cfStackName}" > /dev/null 2>&1 ; echo "$?") -ne 0 ]; then
+    if [ $(aws --region=us-east-2 cloudformation describe-stacks --stack-name "${cfStackName}" > /dev/null 2>&1 ; echo "$?") -ne 0 ]; then
         action="create-stack"
     else
         action="update-stack"
@@ -45,7 +45,7 @@ runCloudFormation() {
     echo "[INFO]  CloudFormation Stack Name: ${cfStackName}"
     echo "[INFO]  CloudFormation Template Location: ${cfTemplate}"
     set +e
-    aws cloudformation ${action} \
+    aws --region=us-east-2 cloudformation ${action} \
         --stack-name ${cfStackName} \
         --template-body file://${cfTemplate} \
         --capabilities CAPABILITY_IAM \
@@ -76,7 +76,7 @@ checkCFStatus(){
     fi
 
     while [ ${checkCFStatusStart} -le ${checkCFStatusTimeout} ]; do
-        CFStatus=$(aws cloudformation describe-stacks --stack-name ${stackName} |grep "\"StackStatus\":")
+        CFStatus=$(aws --region=us-east-2 cloudformation describe-stacks --stack-name ${stackName} |grep "\"StackStatus\":")
         if [[ "${CFStatus}" == *"CREATE_COMPLETE"* ]];then
             echo "CloudFormation Create Completed Successfully."
             return
@@ -85,7 +85,7 @@ checkCFStatus(){
             return
         elif [[ "${CFStatus}" == *"ROLLBACK_COMPLETE"* ]];then
             echo "[ERRO] An error occurred when running the CloudFormation Stack. Displaying the CloudFormation Stack Events."
-            aws cloudformation describe-stack-events --stack-name ${stackName} --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`].ResourceStatusReason' --output text
+            aws --region=us-east-2 cloudformation describe-stack-events --stack-name ${stackName} --query 'StackEvents[?ResourceStatus==`CREATE_FAILED`].ResourceStatusReason' --output text
             echo "[ERRO] CloudFormation Failed, exiting."
             exit 1
         fi
@@ -108,7 +108,7 @@ checkCFStatusTimeout=1200
 
 check4Template webnstance && validateCloudFormation webinstance
 
-if hasTemplate web; then
+if check4Template web; then
     runCloudFormation webinstance
 fi
 
