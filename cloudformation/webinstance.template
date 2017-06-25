@@ -89,4 +89,4 @@ Resources:
 Outputs:
   RaviInstanceIpAddress:
     Description: IP of test EC2 Instance
-    Value: !Sub '${DBEc2Instance.PrivateIp}'
+    Value: !Sub '${RaviEc2Instance.PrivateIp}'
