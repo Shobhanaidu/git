@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: Launches new ec2 instance for ci-cd
 Parameters:
   KeyName:
-    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
+    Description: this is the name  of an existing EC2 KeyPair to enable SSH access to the instance
     Type: String
     Default: ravi-ops
   ServerName:
